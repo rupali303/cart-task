@@ -1,21 +1,22 @@
 import React from 'react'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 
 function Navbar(product1) {
 
+  const { id } = useParams()
   const navigate = useNavigate()
   const handleStart = () => {
     navigate("/")
   }
 
-  const handleCart = (product1, check) => {
+  const handleCart = (product1,check) => {
     const cart = JSON.parse(localStorage.getItem("cart")) || []
-    const singleProduct = cart?.find((item) => cart.id === product1.id)
+    const singleProduct = cart?.find((item) => item.id === product1.id)
 
     if (singleProduct) {
       const updateCart = cart.map((item) => {
-        if (cart.id === product1.id) {
+        if (item.id === product1.id) {
           return {
             ...item, quantity: item.quantity + 1
           }

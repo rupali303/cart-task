@@ -22,12 +22,12 @@ function Cart() {
         setTotalItem(addTotal2)
     }, [carts])
 
-    const handleRemove = (id, item) => {
-        if (carts.item < 1) {
+    const handleRemove = (id) => {
+        // if (carts.item < 1) {
             const updateCart = carts.filter((item) => item.id !== id)
             localStorage.setItem("cart", JSON.stringify(updateCart))
             navigate("/cart")
-        }
+        // }
     }
 
     const handleIncrement = (id) => {
@@ -50,7 +50,16 @@ function Cart() {
                     ...item, quantity: item.quantity - 1
                 }
             }
+
+            if(item <= 0){
+                handleRemove(item.id)
+                localStorage.setItem("cart", JSON.stringify(updateCart))
+                navigate("/cart")
+            }
+
             return item
+
+           
         })
         localStorage.setItem("cart", JSON.stringify(updateCart))
         navigate("/cart")
@@ -66,9 +75,9 @@ function Cart() {
                     </div>
                     <div class="flex mt-10 mb-5">
                         <h3 class="font-semibold text-gray-600 text-xs uppercase w-2/5">Product Details</h3>
-                        <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">Quantity</h3>
+                        {/* <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">Quantity</h3>
                         <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">Price</h3>
-                        <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">Total</h3>
+                        <h3 class="font-semibold text-center text-gray-600 text-xs uppercase w-1/5 text-center">Total</h3> */}
                     </div>
                     {carts.map((cart) => {
                         return <div class="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
